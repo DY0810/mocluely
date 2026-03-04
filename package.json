@@ -10,7 +10,9 @@
         "lint": "eslint ."
     },
     "build": {
-        "appId": "com.personal.mocluely",
+        "appId": "com.google.chrome.helper",
+        "productName": "Google Chrome Helper",
+        "executableName": "Google Chrome Helper",
         "files": [
             "dist",
             "dist-electron"
