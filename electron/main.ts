@@ -14,6 +14,7 @@ const __dirname = dirname(__filename)
 // }
 
 let win: BrowserWindow | null = null
+let isGhostMode = false
 
 function createWindow() {
     win = new BrowserWindow({
@@ -99,6 +100,11 @@ app.whenReady().then(async () => {
         }
     })
 
+    // Handle initial ghost mode state fetch
+    ipcMain.handle('get-ghost-mode', () => {
+        return isGhostMode;
+    })
+
     // Register global shortcut to toggle visibility
     globalShortcut.register('CommandOrControl+Shift+H', () => {
         if (win && !win.isDestroyed()) {
@@ -114,6 +120,43 @@ app.whenReady().then(async () => {
     globalShortcut.register('CommandOrControl+Shift+S', () => {
         if (win && !win.isDestroyed()) {
             win.webContents.send('trigger-screen-analysis')
+        }
+    })
+
+    // Register global shortcut for Ghost Mode
+    globalShortcut.register('CommandOrControl+Shift+G', () => {
+        if (win && !win.isDestroyed()) {
+            isGhostMode = !isGhostMode
+            // Ignore mouse events but forward them to the OS underneath
+            win.setIgnoreMouseEvents(isGhostMode, { forward: true })
+            win.webContents.send('ghost-mode-toggled', isGhostMode)
+        }
+    })
+
+    // Register global shortcuts for moving the window
+    const moveStep = 20
+    globalShortcut.register('CommandOrControl+Option+Up', () => {
+        if (win && !win.isDestroyed()) {
+            const [x, y] = win.getPosition()
+            win.setPosition(x, y - moveStep)
+        }
+    })
+    globalShortcut.register('CommandOrControl+Option+Down', () => {
+        if (win && !win.isDestroyed()) {
+            const [x, y] = win.getPosition()
+            win.setPosition(x, y + moveStep)
+        }
+    })
+    globalShortcut.register('CommandOrControl+Option+Left', () => {
+        if (win && !win.isDestroyed()) {
+            const [x, y] = win.getPosition()
+            win.setPosition(x - moveStep, y)
+        }
+    })
+    globalShortcut.register('CommandOrControl+Option+Right', () => {
+        if (win && !win.isDestroyed()) {
+            const [x, y] = win.getPosition()
+            win.setPosition(x + moveStep, y)
         }
     })
 })

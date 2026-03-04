@@ -21,6 +21,7 @@ function App() {
     const [systemPrompt, setSystemPrompt] = useState(() => localStorage.getItem('mocluely-system-prompt') || DEFAULT_SYSTEM_PROMPT);
     const [audioStatus, setAudioStatus] = useState('');
     const [isAnswering, setIsAnswering] = useState(false);
+    const [isGhostMode, setIsGhostMode] = useState(false);
 
     const [suggestions, setSuggestions] = useState<Array<{ id: string; text: string }>>([]);
 
@@ -207,6 +208,20 @@ function App() {
         return () => (window as any).ipcRenderer.off('trigger-screen-analysis', handler);
     }, [analyzeScreenNow]);
 
+    // Fetch initial Ghost Mode and listen for toggles
+    useEffect(() => {
+        (window as any).ipcRenderer.invoke('get-ghost-mode').then((mode: boolean) => {
+            setIsGhostMode(mode);
+        });
+
+        const ghostHandler = (_event: any, mode: boolean) => {
+            setIsGhostMode(mode);
+        };
+        (window as any).ipcRenderer.on('ghost-mode-toggled', ghostHandler);
+
+        return () => (window as any).ipcRenderer.off('ghost-mode-toggled', ghostHandler);
+    }, []);
+
     return (
         <div className="glass-panel">
             {/* ── Header ── */}
@@ -214,6 +229,12 @@ function App() {
                 <div className="title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <EyeOff size={15} color="var(--accent)" />
                     MoCluely
+
+                    {isGhostMode && (
+                        <span style={{ fontSize: '13px', marginLeft: '2px' }} title="Ghost Mode (Click-Through)">
+                            👻
+                        </span>
+                    )}
 
                     {/* Top Status Indicator */}
                     {isCapturing && (
