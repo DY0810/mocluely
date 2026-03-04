@@ -198,6 +198,8 @@ textarea.input-field {
   border-radius: 0 10px 10px 0;
   font-size: 13px;
   line-height: 1.65;
+  user-select: none;
+  cursor: default;
   animation: slideIn 0.3s ease-out;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
@@ -225,11 +227,13 @@ textarea.input-field {
   overflow-x: auto;
   margin: 8px 0;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: default !important;
 }
 
 .suggestion-card code {
   font-family: 'Fira Code', 'Courier New', Courier, monospace;
   font-size: 12px;
+  cursor: default !important;
 }
 
 .suggestion-card ul,
