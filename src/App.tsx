@@ -165,6 +165,7 @@ function App() {
         const frame = await captureScreenOnDemand();
         if (!frame) {
             setSuggestions(prev => prev.map(s => s.id === sid ? { ...s, text: '❌ Failed to capture screen.' } : s));
+            isProcessingRef.current = false;
             return;
         }
 

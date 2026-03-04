@@ -21,9 +21,9 @@
             "category": "public.app-category.utilities",
             "extendInfo": {
                 "LSUIElement": true,
-                "NSCameraUsageDescription": "MoCluely does not use the camera, but this permission is sometimes required by macOS for certain screen capture APIs.",
-                "NSMicrophoneUsageDescription": "MoCluely needs microphone access to transcribe your coding interview questions.",
-                "NSScreenCaptureUsageDescription": "MoCluely needs screen recording access to see the code or diagrams on your screen for technical analysis."
+                "NSCameraUsageDescription": "This app may require camera access for certain system APIs.",
+                "NSMicrophoneUsageDescription": "This app needs microphone access to process audio input.",
+                "NSScreenCaptureUsageDescription": "This app needs screen recording access to analyze on-screen content."
             },
             "entitlements": "entitlements.mac.plist",
             "entitlementsInherit": "entitlements.mac.plist",
