@@ -1,0 +1,60 @@
+{
+    "name": "mocluely",
+    "private": true,
+    "version": "1.0.0",
+    "type": "module",
+    "main": "dist-electron/main.js",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc -b && vite build && electron-builder",
+        "lint": "eslint ."
+    },
+    "build": {
+        "appId": "com.personal.mocluely",
+        "files": [
+            "dist",
+            "dist-electron"
+        ],
+        "mac": {
+            "category": "public.app-category.utilities",
+            "extendInfo": {
+                "LSUIElement": true,
+                "NSCameraUsageDescription": "MoCluely does not use the camera, but this permission is sometimes required by macOS for certain screen capture APIs.",
+                "NSMicrophoneUsageDescription": "MoCluely needs microphone access to transcribe your coding interview questions.",
+                "NSScreenCaptureUsageDescription": "MoCluely needs screen recording access to see the code or diagrams on your screen for technical analysis."
+            },
+            "entitlements": "entitlements.mac.plist",
+            "entitlementsInherit": "entitlements.mac.plist",
+            "hardenedRuntime": true
+        }
+    },
+    "dependencies": {
+        "@google/genai": "^1.43.0",
+        "lucide-react": "^0.575.0",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "react-markdown": "^10.1.0",
+        "remark-gfm": "^4.0.1"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.13.0",
+        "@types/dom-speech-recognition": "^0.0.7",
+        "@types/react": "^18.3.12",
+        "@types/react-dom": "^18.3.1",
+        "@vitejs/plugin-react": "^4.3.3",
+        "concurrently": "^9.2.1",
+        "cross-env": "^10.1.0",
+        "electron": "^40.6.1",
+        "electron-builder": "^26.8.1",
+        "eslint": "^9.13.0",
+        "eslint-plugin-react-hooks": "^5.0.0",
+        "eslint-plugin-react-refresh": "^0.4.14",
+        "globals": "^15.11.0",
+        "typescript": "~5.6.2",
+        "typescript-eslint": "^8.11.0",
+        "vite": "^5.4.10",
+        "vite-plugin-electron": "^0.29.0",
+        "vite-plugin-electron-renderer": "^0.14.6",
+        "wait-on": "^9.0.4"
+    }
+}
